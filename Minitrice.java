@@ -4,6 +4,64 @@ import java.util.regex.Pattern;
 
 public class Minitrice {
 
+    private static boolean errorOccurred = false;
+
+    private static void processLine(String line) {
+        line = line.trim();
+        String operator = "";
+
+        if (line.contains("+")) operator = "+";
+        else if (line.contains("-")) operator = "-";
+        else if (line.contains("*")) operator = "*";
+        else if (line.contains("/")) operator = "/";
+        else {
+            // Erreur de syntaxe si aucun opérateur valide n'est trouvé
+            System.err.println("Erreur de syntaxe pour le calcul: \"" + line + "\""); [cite: 167]
+            errorOccurred = true; 
+            return;
+        }
+
+        try {
+            String[] parts = line.split(Pattern.quote(operator));
+            double num1 = Double.parseDouble(parts[0].trim());
+            double num2 = Double.parseDouble(parts[1].trim());
+            double result = 0;
+            boolean operationDone = false; // Pour savoir si on doit afficher un résultat
+
+            switch (operator) {
+                case "+":
+                case "-":
+                case "*":
+                    if (operator.equals("+")) result = num1 + num2;
+                    if (operator.equals("-")) result = num1 - num2;
+                    if (operator.equals("*")) result = num1 * num2;
+                    operationDone = true;
+                    break;
+                
+                case "/":
+                    if (num2 == 0) {
+
+                        System.err.println("Division par zéro"); [cite: 183]
+                        errorOccurred = true; 
+                    } else {
+                        result = num1 / num2;
+                        operationDone = true;
+                    }
+                    break;
+            }
+            
+
+            if(operationDone) {
+                System.out.printf("%.2f\n", result);
+            }
+
+        } catch (Exception e) {
+
+            System.err.println("Erreur de syntaxe pour le calcul: \"" + line + "\""); [cite: 167]
+            errorOccurred = true;
+        }
+    }
+
     public static void main(String[] args) {
         
         Console console = System.console();
@@ -27,39 +85,10 @@ public class Minitrice {
             }
             scanner.close();
         }
-    }
-
-    private static void processLine(String line) {
-        line = line.trim();
-        String operator = "";
-
-        if (line.contains("+")) operator = "+";
-        else if (line.contains("-")) operator = "-";
-        else if (line.contains("*")) operator = "*";
-        else if (line.contains("/")) operator = "/";
-        else {
-            return;
-        }
-
-        try {
-            String[] parts = line.split(Pattern.quote(operator));
-            double num1 = Double.parseDouble(parts[0].trim());
-            double num2 = Double.parseDouble(parts[1].trim());
-            double result = 0;
-
-            switch (operator) {
-                case "+": result = num1 + num2; break;
-                case "-": result = num1 - num2; break;
-                case "*": result = num1 * num2; break;
-                case "/": 
-                    result = num1 / num2; 
-                    break;
-            }
-            
-            System.out.printf("%.2f\n", result);
-
-        } catch (Exception e) {
-            System.err.println("Erreur de syntaxe.");
+        if (errorOccurred) {
+            System.exit(1); // 
         }
     }
+
+    
 }
