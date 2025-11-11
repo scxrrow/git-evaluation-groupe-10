@@ -16,7 +16,7 @@ public class Minitrice {
         else if (line.contains("/")) operator = "/";
         else {
             // Erreur de syntaxe si aucun opérateur valide n'est trouvé
-            System.err.println("Erreur de syntaxe pour le calcul: \"" + line + "\""); [cite: 167]
+            System.err.println("Erreur de syntaxe pour le calcul: \"" + line + "\""); 
             errorOccurred = true; 
             return;
         }
@@ -41,7 +41,7 @@ public class Minitrice {
                 case "/":
                     if (num2 == 0) {
 
-                        System.err.println("Division par zéro"); [cite: 183]
+                        System.err.println("Division par zéro"); 
                         errorOccurred = true; 
                     } else {
                         result = num1 / num2;
@@ -57,7 +57,7 @@ public class Minitrice {
 
         } catch (Exception e) {
 
-            System.err.println("Erreur de syntaxe pour le calcul: \"" + line + "\""); [cite: 167]
+            System.err.println("Erreur de syntaxe pour le calcul: \"" + line + "\"");
             errorOccurred = true;
         }
     }
