@@ -1,0 +1,3 @@
+#!/bin/bash
+javac Generator.java
+java Generator "$@"
